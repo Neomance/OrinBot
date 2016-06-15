@@ -86,7 +86,7 @@ namespace OrinBot
                 .Description("sends motivation")
                 .Do(async (e) =>
                 {
-                    await e.Channel.SendMessage("/tts You can do it, Believe in yourself");
+                    await e.Channel.SendMessage("You can do it, Believe in yourself");
                 });
 
         }
