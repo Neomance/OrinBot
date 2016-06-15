@@ -79,7 +79,7 @@ namespace OrinBot
                 .Do(async (e) =>
                 {
                     //await e.Channel.SendFile("../../images/orin.jpg");
-                    await e.Channel.SendMessage("https://i.ytimg.com/vi/icqDxNab3Do/maxresdefault.jpg");
+                    await e.Channel.SendMessage("No cats here");
                 });
 
 
