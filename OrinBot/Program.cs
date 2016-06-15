@@ -82,6 +82,12 @@ namespace OrinBot
                     await e.Channel.SendMessage("https://i.ytimg.com/vi/icqDxNab3Do/maxresdefault.jpg");
                 });
 
+            cService.CreateCommand("master")
+                .Description("sends motivation")
+                .Do(async (e) =>
+                {
+                    await e.Channel.SendMessage("You can do it, Believe in yourself");
+                });
 
         }
 
@@ -96,3 +102,4 @@ namespace OrinBot
         }
     }
 }
+
