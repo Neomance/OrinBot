@@ -5,9 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 using Discord;
 using Discord.Commands;
-using System.IO;
-using System.Net;
-using System.Xml;
 
 namespace OrinBot
 {
@@ -91,17 +88,6 @@ namespace OrinBot
                 {
                     await e.Channel.SendMessage("You can do it, Believe in yourself");
                 });
-                
-            cService.CreateCommand("study")
-                .Description("Gets Info Online")
-                .Parameter("key", ParameterType.Unparsed)
-                .Do(async (e) =>
-                {
-                    //var toReturn = $"Hello {e.GetArg("user")}";
-                   
-                    var toReturn = webReq(e.GetArg("key"));
-                    await e.Channel.SendMessage(toReturn);
-                });
 
         }
 
@@ -113,73 +99,6 @@ namespace OrinBot
         public void Log(object sender, LogMessageEventArgs e)
         {
             Console.WriteLine("Log disabled");
-        }
-        
-        public String webReq(String param)
-        {
-            param = param.Replace(" ", "%20");
-            WebRequest req = WebRequest.Create("http://api.wolframalpha.com/v2/query?appid=HR24V9-9Q2J72WX96&input="+param+"&format=plaintext");
-            WebResponse resp = req.GetResponse();
-            String res = ((HttpWebResponse)resp).StatusDescription;
-            //Debug.WriteLine(((HttpWebResponse)resp).StatusDescription);
-            if (res.Equals("OK"))
-            {
-                Stream ds = resp.GetResponseStream();
-                StreamReader rdr = new StreamReader(ds);
-                String result = rdr.ReadToEnd();
-                if (result.Length > 0)
-                {
-                    String xmls = parxml(result);
-                    if (xmls.Length > 0)
-                    {
-                        return xmls;
-                    }
-                }
-                rdr.Close();
-            }
-            resp.Close();
-
-            return "No Results";
-        }
-
-        public String parxml(String tx)
-        {
-            String result = "";
-            using (XmlReader rd = XmlReader.Create(new StringReader(tx)))
-            {
-                rd.ReadToFollowing("pod");
-                rd.MoveToFirstAttribute();
-                String re = rd.Value;
-                while (!re.Equals("Result"))
-                {
-                    rd.ReadToFollowing("pod");
-                    rd.MoveToNextAttribute();
-                    re = rd.Value;
-                }
-                if (re.Equals("Result"))
-                {
-                    //Debug.WriteLine(re);
-                    try{
-                    rd.ReadToFollowing("plaintext");
-                    //Debug.WriteLine(rd.ReadElementContentAsString());
-                        result = rd.ReadElementContentAsString();
-                    }catch(Exception noRes){
-
-                    }
-                    try
-                    {
-                        rd.ReadToFollowing("imagesource");
-                        result = result + " " + rd.ReadElementContentAsString();
-                        //Debug.WriteLine(rd.ReadElementContentAsString());
-                    }
-                    catch (Exception noNode)
-                    {
-
-                    }
-
-                }
-            }
-            return result;
         }
     }
 }
