@@ -74,6 +74,14 @@ namespace OrinBot
                     await e.Channel.SendMessage("Nyaa");
                 });
 
+            cService.CreateCommand("cat")
+                .Description("random cat picture")
+                .Do(async (e) =>
+                {
+                    //await e.Channel.SendFile("../../images/orin.jpg");
+                    await e.Channel.SendMessage("https://i.ytimg.com/vi/icqDxNab3Do/maxresdefault.jpg");
+                });
+
 
         }
 
