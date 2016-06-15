@@ -61,7 +61,8 @@ namespace OrinBot
                 .Parameter("user", ParameterType.Unparsed)
                 .Do(async (e) =>
                 {
-                    var toReturn = $"Hello {e.GetArg("user")}";
+                    //var toReturn = $"Hello {e.GetArg("user")}";
+                    var toReturn = "Hello " + e.GetArg("user");
                     await e.Channel.SendMessage(toReturn);
                 });
 
@@ -76,9 +77,14 @@ namespace OrinBot
 
         }
 
+        //public void Log(object sender, LogMessageEventArgs e)
+        //{
+        //    Console.WriteLine($"[{e.Severity}] [{e.Source}] {e.Message}");
+        //}
+
         public void Log(object sender, LogMessageEventArgs e)
         {
-            Console.WriteLine($"[{e.Severity}] [{e.Source}] {e.Message}");
+            Console.WriteLine("Log disabled");
         }
     }
 }
